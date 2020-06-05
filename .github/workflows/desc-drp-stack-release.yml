@@ -1,0 +1,27 @@
+name: desc-drp-stack release
+
+on: 
+ release:
+  types: [published]
+
+jobs:
+  build:
+    name: desc-drp-stack release
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Check Disk Space
+        run: df -h && sudo apt-get clean && df -h 
+      - name: Docker login
+        run: echo '${{ secrets.DOCKERHUB_ACCESSTOK }}' | docker login --username heather999 --password-stdin
+      - name: checkout desc-drp-stack
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: Get the tag
+        id: get_tag
+        run: echo ::set-output name=DOCKTAG::${GITHUB_REF/refs\/tags\//}
+      - name: do docker build
+        run: docker build --no-cache -t lsstdesc/desc-drp-stack:${{ steps.get_tag.outputs.DOCKTAG }} -f $GITHUB_WORKSPACE/Dockerfile . 
+      - name: Docker push tag
+        run: docker push  lsstdesc/desc-drp-stack:${{ steps.get_tag.outputs.DOCKTAG }}
+       
