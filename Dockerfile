@@ -11,6 +11,8 @@ WORKDIR $LSST_STACK_DIR
 # Versions of additional packages to install
 ARG DESC_GCR_VER=0.8.8
 ARG DESC_GCRCatalogs_VER=v0.14.3
+# numba version CC includes with CVMFS v19 installation
+ARG DESC_numba_VER=0.46.0
 ARG DESC_ngmix_VER=1.3.4
 ARG DESC_ngmix_VER_STR=v$DESC_ngmix_VER
 ARG DESC_meas_extensions_ngmix_VER=0.9.5
@@ -37,6 +39,7 @@ RUN echo "Environment: \n" && env | sort && \
                   pip freeze > $LSST_STACK_DIR/dm-constraints.txt; \
                   pip install -c $LSST_STACK_DIR/dm-constraints.txt GCR==$DESC_GCR_VER; \
                   pip install -c $LSST_STACK_DIR/dm-constraints.txt https://github.com/LSSTDESC/gcr-catalogs/archive/$DESC_GCRCatalogs_VER.tar.gz; \
+                  pip install -c $LSST_STACK_DIR/dm-constraints.txt numba==$DESC_numba_VER; \
                   curl -LO https://github.com/lsst/obs_lsst/archive/$DESC_OBS_LSST_VER.tar.gz; \
                   tar xvfz $DESC_OBS_LSST_VER.tar.gz; \ 
                   ln -s obs_lsst-$DESC_OBS_LSST_VER obs_lsst; \
