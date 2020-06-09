@@ -20,6 +20,7 @@ ARG DESC_DC2_PRODUCTION_VER=0.4.0
 ARG DESC_DC2_PRODUCTION_VER_STR=v$DESC_DC2_PRODUCTION_VER
 ARG DESC_OBS_LSST_VER=19.0.0-run2.2-v2
 ARG DESC_SIMS_CI_PIPE_VER=0.1.1
+ARG DESC_IPP_VER=DC2-Run2.2i-1.1.0
 
 # One RUN command to reduce docker image size
 # pip freeze captures all of the current DMstack python package versions so we avoid updating those
@@ -40,6 +41,9 @@ RUN echo "Environment: \n" && env | sort && \
                   pip install -c $LSST_STACK_DIR/dm-constraints.txt GCR==$DESC_GCR_VER; \
                   pip install -c $LSST_STACK_DIR/dm-constraints.txt https://github.com/LSSTDESC/gcr-catalogs/archive/$DESC_GCRCatalogs_VER.tar.gz; \
                   pip install -c $LSST_STACK_DIR/dm-constraints.txt numba==$DESC_numba_VER; \
+                  curl -LO https://github.com/LSSTDESC/ImageProcessingPipelines/archive/$DESC_IPP_VER.tar.gz; \
+                  tar xvfz $DESC_IPP_VER.tar.gz; \
+                  ln -s ImageProcessingPipelines-$DESC_IPP_VER ImageProcessingPipelines; \
                   curl -LO https://github.com/lsst/obs_lsst/archive/$DESC_OBS_LSST_VER.tar.gz; \
                   tar xvfz $DESC_OBS_LSST_VER.tar.gz; \ 
                   ln -s obs_lsst-$DESC_OBS_LSST_VER obs_lsst; \
