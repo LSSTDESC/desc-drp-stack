@@ -13,6 +13,7 @@ ARG DESC_GCR_VER=0.8.8
 ARG DESC_GCRCatalogs_VER=v0.14.3
 # numba version CC includes with CVMFS v19 installation
 ARG DESC_numba_VER=0.46.0
+ARG DESC_llvmlite_VER=0.30.0
 ARG DESC_ngmix_VER=1.3.4
 ARG DESC_ngmix_VER_STR=v$DESC_ngmix_VER
 ARG DESC_meas_extensions_ngmix_VER=0.9.5
@@ -31,6 +32,7 @@ ARG DESC_IPP_VER=DC2-Run2.2i-1.1.0
 # install Erin Sheldon's ngmix
 # install DM's meas_extensions_ngmix
 
+
 RUN echo "Environment: \n" && env | sort && \
     source scl_source enable devtoolset-8 && \
     echo -e "source scl_source enable devtoolset-8\n$(cat loadLSST.bash)" > loadLSST.bash && \
@@ -40,7 +42,7 @@ RUN echo "Environment: \n" && env | sort && \
                   pip freeze > $LSST_STACK_DIR/dm-constraints.txt; \
                   pip install -c $LSST_STACK_DIR/dm-constraints.txt GCR==$DESC_GCR_VER; \
                   pip install -c $LSST_STACK_DIR/dm-constraints.txt https://github.com/LSSTDESC/gcr-catalogs/archive/$DESC_GCRCatalogs_VER.tar.gz; \
-                  pip install -c $LSST_STACK_DIR/dm-constraints.txt numba==$DESC_numba_VER; \
+                  pip install -c $LSST_STACK_DIR/dm-constraints.txt llvmlite==$DESC_llvmlite_VER numba==$DESC_numba_VER; \
                   curl -LO https://github.com/LSSTDESC/ImageProcessingPipelines/archive/$DESC_IPP_VER.tar.gz; \
                   tar xvfz $DESC_IPP_VER.tar.gz; \
                   ln -s ImageProcessingPipelines-$DESC_IPP_VER ImageProcessingPipelines; \
