@@ -19,15 +19,15 @@ ARG DESC_ngmix_VER_STR=v$DESC_ngmix_VER
 ARG DESC_meas_extensions_ngmix_VER=0.9.5
 ARG DESC_DC2_PRODUCTION_VER=0.4.0
 ARG DESC_DC2_PRODUCTION_VER_STR=v$DESC_DC2_PRODUCTION_VER
-ARG DESC_OBS_LSST_VER=19.0.0-run2.2-v2
+ARG DESC_OBS_LSST_VER=19.0.0-run2.2-v3
 ARG DESC_SIMS_CI_PIPE_VER=0.1.1
-ARG DESC_IPP_VER=DC2-Run2.2i-1.1.0
+ARG DESC_IPP_VER=DC2-Run2.2i-1.2.0
 
 # One RUN command to reduce docker image size
 # pip freeze captures all of the current DMstack python package versions so we avoid updating those
 # pip install GCR and GCRCatalogs
-# install DESC obs_lsst
-# install sims_ci_pipe
+# install DESC obs_lsst include updated pipe task configs
+# install sims_ci_pipe master 
 # install DC2-production
 # install Erin Sheldon's ngmix
 # install DM's meas_extensions_ngmix
@@ -53,9 +53,7 @@ RUN echo "Environment: \n" && env | sort && \
                   setup -r . -j; \
                   scons; \
                   cd ..; \
-                  curl -LO https://github.com/LSSTDESC/sims_ci_pipe/archive/$DESC_SIMS_CI_PIPE_VER.tar.gz; \
-                  tar xvzf $DESC_SIMS_CI_PIPE_VER.tar.gz; \
-                  ln -s sims_ci_pipe-$DESC_SIMS_CI_PIPE_VER sims_ci_pipe; \
+                  git clone https://github.com/LSSTDESC/sims_ci_pipe; \
                   cd sims_ci_pipe; \
                   setup -r . -j; \   
                   scons; \
