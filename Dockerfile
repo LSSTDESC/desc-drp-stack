@@ -8,6 +8,10 @@ ARG LSST_GROUP=lsst
 
 WORKDIR $LSST_STACK_DIR
 
+USER root
+yum install -y time
+USER lsst
+
 # Versions of additional packages to install
 ARG DESC_GCR_VER=0.8.8
 ARG DESC_GCRCatalogs_VER=v0.14.3
