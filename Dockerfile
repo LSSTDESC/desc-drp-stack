@@ -9,7 +9,7 @@ ARG LSST_GROUP=lsst
 WORKDIR $LSST_STACK_DIR
 
 USER root
-yum install -y time
+RUN yum install -y time
 USER lsst
 
 # Versions of additional packages to install
