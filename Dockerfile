@@ -1,4 +1,4 @@
-FROM lsstsqre/centos:7-stack-lsst_distrib-v19_0_0
+FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_04
 MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 ARG LSST_STACK_DIR=/opt/lsst/software/stack
@@ -12,28 +12,25 @@ USER root
 RUN yum install -y time
 USER lsst
 
-# Versions of additional packages to install
-ARG DESC_GCR_VER=0.8.8
-ARG DESC_GCRCatalogs_VER=v0.14.3
-# numba version CC includes with CVMFS v19 installation
-ARG DESC_numba_VER=0.46.0
-ARG DESC_llvmlite_VER=0.30.0
-ARG DESC_ngmix_VER=1.3.4
-ARG DESC_ngmix_VER_STR=v$DESC_ngmix_VER
-ARG DESC_meas_extensions_ngmix_VER=0.9.5
-ARG DESC_DC2_PRODUCTION_VER=0.4.0
-ARG DESC_DC2_PRODUCTION_VER_STR=v$DESC_DC2_PRODUCTION_VER
-ARG DESC_OBS_LSST_VER=19.0.0-run2.2-v3
-ARG DESC_SIMS_CI_PIPE_VER=0.1.1
-ARG DESC_IPP_VER=DC2-Run2.2i-1.2.0
+# Additional packages to install
+ARG DESC_GCR_VER=v0.9.2
+ARG DESC_GCRCATALOGS_VER=v1.2.1
+
+# versions CC includes with CVMFS w_2021_04 installation
+ARG DESC_numba_VER=0.52.0
+ARG DESC_llvmlite_VER=0.35.0
+
+ARG DESC_NGMIX_VER=v1.3.8
+ARG DESC_meas_extensions_ngmix_VER=0.9.6
+ARG DESC_DC2_PRODUCTION_VER=v0.5.0
+ARG DESC_GEN3_WORKFLOW_VER=u/jchiang/gen3_scripts
+ARG DESC_IPP_VER=v1.0-dr2-parsl
 
 # One RUN command to reduce docker image size
-# pip freeze captures all of the current DMstack python package versions so we avoid updating those
-# pip install GCR and GCRCatalogs
-# install DESC obs_lsst include updated pipe task configs
+# conda install GCR, GCRCatalogs, numba, llvmlit, ngmix
+# install gen3_workflow
 # install sims_ci_pipe master 
 # install DC2-production
-# install Erin Sheldon's ngmix
 # install DM's meas_extensions_ngmix
 
 
@@ -43,36 +40,27 @@ RUN echo "Environment: \n" && env | sort && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   setup lsst_distrib; \
-                  pip freeze > $LSST_STACK_DIR/dm-constraints.txt; \
-                  pip install -c $LSST_STACK_DIR/dm-constraints.txt GCR==$DESC_GCR_VER; \
-                  pip install -c $LSST_STACK_DIR/dm-constraints.txt https://github.com/LSSTDESC/gcr-catalogs/archive/$DESC_GCRCatalogs_VER.tar.gz; \
-                  pip install -c $LSST_STACK_DIR/dm-constraints.txt llvmlite==$DESC_llvmlite_VER numba==$DESC_numba_VER; \
+                  conda install -c conda-forge -y --freeze-installed gcr==$DESC_GCR_VER; \
+                  conda install -c conda-forge -y --freeze-installed lsstdesc-gcr-catalogs==$DESC_GCRCATALOGS_VER; \
+                  conda install -c conda-forge -y --freeze-installed ngmix==$DESC_NGMIX_VER; \
+                  conda install -c conda-forge -y --freeze-installed llvmlite==$DESC_llvmlite_VER; \
+                  git clone https://github.com/LSSTDESC/gen3_workflow.git; \
+                  cd gen3_workflow; \
+                  git checkout $DESC_GEN3_WORKFLOW_VER; \
+                  setup -r . -j; \
+                  cd ..;\
                   curl -LO https://github.com/LSSTDESC/ImageProcessingPipelines/archive/$DESC_IPP_VER.tar.gz; \
                   tar xvfz $DESC_IPP_VER.tar.gz; \
-                  ln -s ImageProcessingPipelines-$DESC_IPP_VER ImageProcessingPipelines; \
-                  curl -LO https://github.com/lsst/obs_lsst/archive/$DESC_OBS_LSST_VER.tar.gz; \
-                  tar xvfz $DESC_OBS_LSST_VER.tar.gz; \ 
-                  ln -s obs_lsst-$DESC_OBS_LSST_VER obs_lsst; \
-                  cd obs_lsst; \
-                  setup -r . -j; \
-                  scons; \
-                  cd ..; \
+                  ln -s ImageProcessingPipelines-$DESC_IPP_VER ImageProcessingPipelines; 
                   git clone https://github.com/LSSTDESC/sims_ci_pipe; \
                   cd sims_ci_pipe; \
                   setup -r . -j; \   
                   scons; \
                   cd ..; \
-                  curl -LO https://github.com/LSSTDESC/DC2-production/archive/$DESC_DC2_PRODUCTION_VER_STR.tar.gz; \
-                  tar xvfz $DESC_DC2_PRODUCTION_VER_STR.tar.gz; \
-                  rm $DESC_DC2_PRODUCTION_VER_STR.tar.gz; \
+                  curl -LO https://github.com/LSSTDESC/DC2-production/archive/$DESC_DC2_PRODUCTION_VER.tar.gz; \
+                  tar xvfz $DESC_DC2_PRODUCTION_VER.tar.gz; \
+                  rm $DESC_DC2_PRODUCTION_VER.tar.gz; \
                   ln -s DC2-production-$DESC_DC2_PRODUCTION_VER DC2-production; \
-                  curl -LO https://github.com/esheldon/ngmix/archive/$DESC_ngmix_VER_STR.tar.gz; \
-                  tar xzf $DESC_ngmix_VER_STR.tar.gz; \
-                  cd ngmix-$DESC_ngmix_VER; \ 
-                  python setup.py install; \
-                  cd ..; \
-                  rm $DESC_ngmix_VER_STR.tar.gz; \
-                  ln -s ngmix-$DESC_ngmix_VER ngmix; \
                   curl -LO https://github.com/lsst-dm/meas_extensions_ngmix/archive/v$DESC_meas_extensions_ngmix_VER.tar.gz; \
                   tar xzf v$DESC_meas_extensions_ngmix_VER.tar.gz; \
                   cd meas_extensions_ngmix-$DESC_meas_extensions_ngmix_VER; \
