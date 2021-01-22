@@ -47,7 +47,7 @@ RUN echo "Environment: \n" && env | sort && \
                   cd ..;\
                   curl -LO https://github.com/LSSTDESC/ImageProcessingPipelines/archive/$DESC_IPP_VER.tar.gz; \
                   tar xvfz $DESC_IPP_VER.tar.gz; \
-                  ln -s ImageProcessingPipelines-$DESC_IPP_VER ImageProcessingPipelines; \
+                  ln -s ImageProcessingPipelines-v$DESC_IPP_VER ImageProcessingPipelines; \
                   git clone https://github.com/LSSTDESC/sims_ci_pipe; \
                   cd sims_ci_pipe; \
                   source setup/setup.sh; \
@@ -55,7 +55,7 @@ RUN echo "Environment: \n" && env | sort && \
                   curl -LO https://github.com/LSSTDESC/DC2-production/archive/$DESC_DC2_PRODUCTION_VER.tar.gz; \
                   tar xvfz $DESC_DC2_PRODUCTION_VER.tar.gz; \
                   rm $DESC_DC2_PRODUCTION_VER.tar.gz; \
-                  ln -s DC2-production-$DESC_DC2_PRODUCTION_VER DC2-production; \
+                  ln -s DC2-production-v$DESC_DC2_PRODUCTION_VER DC2-production; \
                   curl -LO https://github.com/lsst-dm/meas_extensions_ngmix/archive/v$DESC_meas_extensions_ngmix_VER.tar.gz; \
                   tar xzf v$DESC_meas_extensions_ngmix_VER.tar.gz; \
                   cd meas_extensions_ngmix-$DESC_meas_extensions_ngmix_VER; \
