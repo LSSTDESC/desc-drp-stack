@@ -52,7 +52,7 @@ RUN echo "Environment: \n" && env | sort && \
                   cd ..;\
                   curl -LO https://github.com/LSSTDESC/ImageProcessingPipelines/archive/$DESC_IPP_VER.tar.gz; \
                   tar xvfz $DESC_IPP_VER.tar.gz; \
-                  ln -s ImageProcessingPipelines-$DESC_IPP_VER ImageProcessingPipelines; 
+                  ln -s ImageProcessingPipelines-$DESC_IPP_VER ImageProcessingPipelines; \
                   git clone https://github.com/LSSTDESC/sims_ci_pipe; \
                   cd sims_ci_pipe; \
                   setup -r . -j; \   
