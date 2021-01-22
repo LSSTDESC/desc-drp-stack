@@ -15,21 +15,18 @@ USER lsst
 # Additional packages to install
 ARG DESC_GCR_VER=0.9.2
 ARG DESC_GCRCATALOGS_VER=1.2.1
-
-# versions CC includes with CVMFS w_2021_04 installation
-ARG DESC_numba_VER=0.52.0
-ARG DESC_llvmlite_VER=0.35.0
-
 ARG DESC_NGMIX_VER=1.3.8
 ARG DESC_meas_extensions_ngmix_VER=0.9.6
 ARG DESC_DC2_PRODUCTION_VER=v0.5.0
 ARG DESC_GEN3_WORKFLOW_VER=u/jchiang/gen3_scripts
 ARG DESC_IPP_VER=v1.0-dr2-parsl
 
-# One RUN command to reduce docker image size
-# conda install GCR, GCRCatalogs, numba, llvmlit, ngmix
-#                   conda install -c conda-forge -y --freeze-installed llvmlite==$DESC_llvmlite_VER; \
+# versions CC includes with CVMFS w_2021_04 installation
+#ARG DESC_numba_VER=0.52.0
+#ARG DESC_llvmlite_VER=0.35.0
 
+# One RUN command to reduce docker image size
+# conda install GCR, GCRCatalogs, ngmix
 # install gen3_workflow
 # install sims_ci_pipe master 
 # install DC2-production
@@ -62,8 +59,8 @@ RUN echo "Environment: \n" && env | sort && \
                   curl -LO https://github.com/lsst-dm/meas_extensions_ngmix/archive/v$DESC_meas_extensions_ngmix_VER.tar.gz; \
                   tar xzf v$DESC_meas_extensions_ngmix_VER.tar.gz; \
                   cd meas_extensions_ngmix-$DESC_meas_extensions_ngmix_VER; \
+                  eups declare meas_extensions_ngmix -r .; \
                   setup -r . -j; \
-                  scons; \
                   cd ..; \
                   rm v$DESC_meas_extensions_ngmix_VER.tar.gz; \
                   ln -s meas_extensions_ngmix-$DESC_meas_extensions_ngmix_VER meas_extensions_ngmix;' 
