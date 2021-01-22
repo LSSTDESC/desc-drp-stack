@@ -13,14 +13,14 @@ RUN yum install -y time
 USER lsst
 
 # Additional packages to install
-ARG DESC_GCR_VER=v0.9.2
-ARG DESC_GCRCATALOGS_VER=v1.2.1
+ARG DESC_GCR_VER=0.9.2
+ARG DESC_GCRCATALOGS_VER=1.2.1
 
 # versions CC includes with CVMFS w_2021_04 installation
 ARG DESC_numba_VER=0.52.0
 ARG DESC_llvmlite_VER=0.35.0
 
-ARG DESC_NGMIX_VER=v1.3.8
+ARG DESC_NGMIX_VER=1.3.8
 ARG DESC_meas_extensions_ngmix_VER=0.9.6
 ARG DESC_DC2_PRODUCTION_VER=v0.5.0
 ARG DESC_GEN3_WORKFLOW_VER=u/jchiang/gen3_scripts
