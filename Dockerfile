@@ -37,8 +37,6 @@ ARG DESC_IPP_VER=v1.0-dr2-parsl
 
 
 RUN echo "Environment: \n" && env | sort && \
-    source scl_source enable devtoolset-8 && \
-    echo -e "source scl_source enable devtoolset-8\n$(cat loadLSST.bash)" > loadLSST.bash && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   setup lsst_distrib; \
