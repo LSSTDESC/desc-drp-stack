@@ -28,6 +28,8 @@ ARG DESC_IPP_VER=v1.0-dr2-parsl
 
 # One RUN command to reduce docker image size
 # conda install GCR, GCRCatalogs, numba, llvmlit, ngmix
+#                   conda install -c conda-forge -y --freeze-installed llvmlite==$DESC_llvmlite_VER; \
+
 # install gen3_workflow
 # install sims_ci_pipe master 
 # install DC2-production
@@ -43,7 +45,6 @@ RUN echo "Environment: \n" && env | sort && \
                   conda install -c conda-forge -y --freeze-installed gcr==$DESC_GCR_VER; \
                   conda install -c conda-forge -y --freeze-installed lsstdesc-gcr-catalogs==$DESC_GCRCATALOGS_VER; \
                   conda install -c conda-forge -y --freeze-installed ngmix==$DESC_NGMIX_VER; \
-                  conda install -c conda-forge -y --freeze-installed llvmlite==$DESC_llvmlite_VER; \
                   git clone https://github.com/LSSTDESC/gen3_workflow.git; \
                   cd gen3_workflow; \
                   git checkout $DESC_GEN3_WORKFLOW_VER; \
