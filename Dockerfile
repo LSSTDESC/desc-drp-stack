@@ -1,4 +1,4 @@
-FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_04
+FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_03
 MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 ARG LSST_STACK_DIR=/opt/lsst/software/stack
@@ -23,7 +23,7 @@ ARG DESC_GEN3_WORKFLOW_VER=u/jchiang/gen3_scripts
 ARG DESC_IPP_VER=v1.0-dr2-parsl
 ARG DESC_IPP_VER_STR=1.0-dr2-parsl
 
-# versions CC includes with CVMFS w_2021_04 installation
+# versions CC includes with CVMFS w_2021_03 installation
 #ARG DESC_numba_VER=0.52.0
 #ARG DESC_llvmlite_VER=0.35.0
 
@@ -42,6 +42,7 @@ RUN echo "Environment: \n" && env | sort && \
                   conda install -c conda-forge -y --freeze-installed gcr==$DESC_GCR_VER; \
                   conda install -c conda-forge -y --freeze-installed lsstdesc-gcr-catalogs==$DESC_GCRCATALOGS_VER; \
                   conda install -c conda-forge -y --freeze-installed ngmix==$DESC_NGMIX_VER; \
+                  conda install -c conda-forge -y --freeze-installed parsl; \
                   git clone https://github.com/LSSTDESC/gen3_workflow.git; \
                   cd gen3_workflow; \
                   git checkout $DESC_GEN3_WORKFLOW_VER; \
