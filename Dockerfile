@@ -62,6 +62,11 @@ RUN echo "Environment: \n" && env | sort && \
                   setup -r . -j; \   
                   scons; \
                   cd ..; \
+                  git clone https://github.com/LSSTDESC/dia_pipe.git; \
+                  cd dia_pipe; \
+                  setup -r . -j; \
+                  scons; \
+                  cd ..; \
                   curl -LO https://github.com/LSSTDESC/DC2-production/archive/$DESC_DC2_PRODUCTION_VER_STR.tar.gz; \
                   tar xvfz $DESC_DC2_PRODUCTION_VER_STR.tar.gz; \
                   rm $DESC_DC2_PRODUCTION_VER_STR.tar.gz; \
