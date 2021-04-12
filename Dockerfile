@@ -34,6 +34,7 @@ ARG DESC_IPP_VER_STR=1.0-dr2-parsl
 # install DC2-production
 # install DM's meas_extensions_ngmix
 
+# conda install -c conda-forge -y --freeze-installed parsl; \
 
 RUN echo "Environment: \n" && env | sort && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
@@ -42,7 +43,7 @@ RUN echo "Environment: \n" && env | sort && \
                   conda install -c conda-forge -y --freeze-installed gcr==$DESC_GCR_VER; \
                   conda install -c conda-forge -y --freeze-installed lsstdesc-gcr-catalogs==$DESC_GCRCATALOGS_VER; \
                   conda install -c conda-forge -y --freeze-installed ngmix==$DESC_NGMIX_VER; \
-                  conda install -c conda-forge -y --freeze-installed parsl; \
+                  pip install git+https://github.com/Parsl/parsl.git@lsst-dm-202103
                   git clone https://github.com/LSSTDESC/gen3_workflow.git; \
                   cd gen3_workflow; \
                   git checkout $DESC_GEN3_WORKFLOW_VER; \
