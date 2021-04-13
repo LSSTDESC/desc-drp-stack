@@ -1,4 +1,4 @@
-FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_03
+FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_15
 MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 ARG LSST_STACK_DIR=/opt/lsst/software/stack
@@ -14,7 +14,7 @@ USER lsst
 
 # Additional packages to install
 ARG DESC_GCR_VER=0.9.2
-ARG DESC_GCRCATALOGS_VER=1.2.1
+ARG DESC_GCRCATALOGS_VER=1.3.2
 ARG DESC_NGMIX_VER=1.3.8
 ARG DESC_meas_extensions_ngmix_VER=0.9.6
 ARG DESC_DC2_PRODUCTION_VER=v0.5.0
