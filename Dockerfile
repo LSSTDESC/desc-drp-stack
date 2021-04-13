@@ -43,7 +43,7 @@ RUN echo "Environment: \n" && env | sort && \
                   conda install -c conda-forge -y --freeze-installed gcr==$DESC_GCR_VER; \
                   conda install -c conda-forge -y --freeze-installed lsstdesc-gcr-catalogs==$DESC_GCRCATALOGS_VER; \
                   conda install -c conda-forge -y --freeze-installed ngmix==$DESC_NGMIX_VER; \
-                  pip install git+https://github.com/Parsl/parsl.git@lsst-dm-202103
+                  pip install git+https://github.com/Parsl/parsl.git@lsst-dm-202103; \
                   git clone https://github.com/LSSTDESC/gen3_workflow.git; \
                   cd gen3_workflow; \
                   git checkout $DESC_GEN3_WORKFLOW_VER; \
