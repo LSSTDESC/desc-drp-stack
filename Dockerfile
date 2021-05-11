@@ -1,4 +1,4 @@
-FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_15
+FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_19
 MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 ARG LSST_STACK_DIR=/opt/lsst/software/stack
@@ -44,7 +44,7 @@ RUN echo "Environment: \n" && env | sort && \
                   conda install -c conda-forge -y --freeze-installed lsstdesc-gcr-catalogs==$DESC_GCRCATALOGS_VER; \
                   conda install -c conda-forge -y --freeze-installed ngmix==$DESC_NGMIX_VER; \
                   conda install -c conda-forge -y --freeze-installed ndcctools; \
-                  pip install git+https://github.com/Parsl/parsl.git@lsst-dm-202103; \
+                  pip install git+https://github.com/Parsl/parsl.git@desc; \
                   git clone https://github.com/LSSTDESC/gen3_workflow.git; \
                   cd gen3_workflow; \
                   git checkout $DESC_GEN3_WORKFLOW_VER; \
