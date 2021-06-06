@@ -1,4 +1,5 @@
-FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_19
+ARG LSST_TAG
+FROM lsstsqre/centos:7-stack-lsst_distrib-$LSST_TAG
 MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 ARG LSST_STACK_DIR=/opt/lsst/software/stack
